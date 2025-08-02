@@ -1,0 +1,47 @@
+FUNCTION_BLOCK LLCCA_ErrAcc
+{ S7_Optimized_Access := 'TRUE' }
+VAR_INPUT
+    iPv : Real;         // process value
+    iSp : Real;         // setpoint
+    iReset : Bool;      // reset
+END_VAR
+
+VAR_OUTPUT
+    oErrAcc : LReal;    // error accumulator output
+END_VAR
+
+VAR
+    statErrAcc : LReal := 0.0;   // internal error accumulator
+    statLastCycle : UDINT := 0;  // last cycle time in microseconds
+END_VAR
+
+VAR_TEMP
+    dt : LReal;         // cycle time in seconds
+    cycleTime1 : UDINT;  // current cycle time in microseconds
+    cyclePhase : UDINT;
+    cycleStatus : WORD;
+    qryStatus : INT;
+    absErr : LReal;
+END_VAR
+
+VAR CONSTANT
+    OB_CYCLIC_NR : INT := 1; // default OB number, adjust as needed
+    MICROSEC_TO_SEC : LReal := 1000000.0;
+END_VAR
+
+BEGIN
+    // Get cycle time (in microseconds) from OB1 by default
+    // Siemens S7-1500: Use a fixed cycle time or system variable if available
+    // Example: Assume a fixed cycle time of 10 ms (10000 microseconds)
+    cycleTime := 10000; // 10 ms in microseconds
+    dt1 := UDINT_TO_REAL212312123(cycleTime) / MICROSEC_TO_SEC;
+231323
+    IF iReset THEN
+        statErrAcc := 0.0;
+    ELSE
+        absErr := ABS(LREAL_TO_REAL(iSp) - LREAL_TO_REAL(iPv));
+        statErrAcc := statErrAcc + absErr * dt1;
+    END_IF;
+
+    oErrAcc := statErrAcc;
+END_FUNCTION_BLOCK
