@@ -1,4 +1,6 @@
-## How to use Openness Project
+﻿## How to use Openness Project
+
+[👉中文版本](README_zh.md)
 
 We strongly recommend testing and deploying this project on a Windows 10 Pro virtual machine installed with Siemens TIA Portal V19.
 
@@ -14,13 +16,13 @@ We strongly recommend testing and deploying this project on a Windows 10 Pro vir
 > Tips:  
 > 1. Open **Computer Management** > **Local Users and Groups** > **Groups**  
 > 2. Select the **Siemens TIA Openness** group, right-click **Properties** > **Add**, include the **Administrator** user and the current user. 
-> 3. Apply changes and exit. Restart the system or log out and log back in.  
+> 3. Apply changes and exit. Restart the system or relog in.  
 
 2. Replace DLLs.
 > To ensure compatibility, replace the `Siemens.Engineering.dll` and `Siemens.Engineering.Hmi.dll` in the same directory as `TiaImportExample.exe` with the corresponding files from the local TIA Portal V19 installation.  
 > These files are typically located in the TIA Portal V19 installation directory, by default at `C:\Program Files\Siemens\Automation\Portal V19\PublicAPI\V19`.  
 
-3. Run `.\TiaImportExample.exe`, wait for the TIA Portal V19 permission window to pop up, and click **Allow All**. When the program prints output similar to the following code block, it indicates success. 
+3. Run `.\TiaImportExample.exe` in **Command Prompt(cmd) with administrator privileges**, wait for the TIA Portal V19 permission window to pop up, and click **Allow All**. When the program prints output similar to the following code block, it indicates success.
 
 ```
 Start initializing ...
@@ -42,5 +44,6 @@ HTTP service initialization successful!
 Press Enter to exit...
 ```
 
-> You can test the interface access within the same local area network using `curl http://192.168.103.245:9000/api/home`, which should normally return `Hello, World!`.  
-> **Note:** The program will automatically scan for available LAN IP addresses and use them as the listening address, with the default port being `9000`. If using VMWare Workstation, set the virtual machine's network to **Bridged (Physical Direct Connection)** to ensure the HTTP service deployed on the virtual machine is accessible from the host's local area network.
+> You can test the interface access within the same local area network using `curl http://192.168.103.245:9000/api/home` (or access it by your browser), which should normally return `Hello, World!`.  
+
+> **Note:** The program will automatically scan for available LAN IP addresses and use them as the listening address, with the default port being `9000`. If using VMWare Workstation, you need to set the virtual machine's network to **Bridged (Physical Direct Connection)** mode to ensure the HTTP service deployed on the virtual machine is accessible from the host machine's local area network.
